@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  twitchbot:
+    container_name: twitch-bot
+    image: yushchenkoyaroslav/nikita-twitch-bot:latest
+    restart: on-failure
+  
+  watchtower:
+    image: containrrr/watchtower
+    container_name: twitch-bot-watchtower
+    environment:
+      - "REPO_USER=yushchenkoyaroslav"
+      - "REPO_PASS=dckr_pat_LTmLqBivx6m7snvf9grvgJIFnKU"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 10 twitchbot

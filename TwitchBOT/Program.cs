@@ -5,11 +5,12 @@ namespace TwitchBOT
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            procStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        
             Bot bot = new Bot();
             Console.ReadLine();
+            await Task.Run(() => Thread.Sleep(Timeout.Infinite));
         }
     }
 }
