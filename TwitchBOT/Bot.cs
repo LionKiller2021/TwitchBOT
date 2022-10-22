@@ -10,6 +10,7 @@ namespace TwitchBOT
     {
         TwitchClient client = new TwitchClient();
         ConnectionCredentials credentials = new ConnectionCredentials("botyarastreamer", "oauth:83aoeeykfnhvq0o1px7ay8a482kupi");
+        private Random rnd = new Random();
 
         public Bot()
         {
@@ -36,56 +37,26 @@ namespace TwitchBOT
 
         private void Client_OnChatCommandReceived(object sender, OnChatCommandReceivedArgs e)
         {
-            switch (e.Command.CommandText.ToLower())
+            var command = e.Command.CommandText.ToLower();
+            var now = DateTime.Now;
+
+            if (command == "кубик")
             {
-                case "кубик":
-                    Random rnd = new Random(); // Инициализируем генератор случайных чисел
-                    var result = rnd.Next(1, 7); // Получаем случайное целое число в интервале [ 1; 7 )
-                    client.SendMessage(e.Command.ChatMessage.Channel, $"Результат: {result}"); // Отправляем ответ
-                    break;
-                case "лето":
-                    var now = DateTime.Now; // Получаем текущее время
-                    var endOfSummer = new DateTime(now.Year, 9, 1); // Дата окончания лета
-                    var startOfSummer = new DateTime(now.Year, 6, 1); // Дата начала лета
-                    if (now < endOfSummer && now > startOfSummer) // Проверяем, является ли текущая дата летом
-                    {
-                        var days = (endOfSummer - now).Days; // Получаем количество дней до конца лета
-                        client.SendMessage(e.Command.ChatMessage.Channel, $"До конца лета дней осталось: {days}"); // Отправляем ответ
-                    }
-                    else
-                    {
-                        client.SendMessage(e.Command.ChatMessage.Channel, "Cейчас не лето :("); // Отправляем альтернативный ответ
-                    }
-
-                    break;
-                case "осень":
-                    var now1 = DateTime.Now; // Получаем текущее время
-                    var endOfSummer1 = new DateTime(now1.Year, 12, 1); // Дата окончания лета
-                    var startOfSummer1 = new DateTime(now1.Year,  9, 1); // Дата начала лета
-                    if (now1 < endOfSummer1 && now1 > startOfSummer1) // Проверяем, является ли текущая дата летом
-                    {
-                        var days = (endOfSummer1 - now1).Days; // Получаем количество дней до конца лета
-                        client.SendMessage(e.Command.ChatMessage.Channel, $"До конца осени дней осталось: {days}"); // Отправляем ответ
-                    }
-                    else
-                    {
-                        client.SendMessage(e.Command.ChatMessage.Channel, "Cейчас не осень :("); // Отправляем альтернативный ответ
-                    }
-
-                    break;
-                case "пидор":
-
-                    client.SendMessage(e.Command.ChatMessage.Channel, $"Результат: ОСУЖДАЮ БЫДЛО {e.Command.ChatMessage.Username}"); 
-                    
-
-                    break;
-                case "бибаметр":
-                    Random rnd1 = new Random(); // Инициализируем генератор случайных чисел
-                    var result1 = rnd1.Next(1, 31 ); // Получаем случайное целое число в интервале [ 1; 7 )
-            
-            client.SendMessage(e.Command.ChatMessage.Channel, $"Результат: {result1} см  {e.Command.ChatMessage.Username}");
-            break;
-        }
+                var result = rnd.Next(1, 7);
+                client.SendMessage(e.Command.ChatMessage.Channel, $"Результат: {result}");
+            }
+            else if (command == "др")
+            {
+                var dr = new DateTime(2001, 10, 18);
+                var subtraction = now.Subtract(dr);
+                client.SendMessage(e.Command.ChatMessage.Channel, $"Мой др через: {subtraction.Days}");
+            }
+            else if (command == "бибаметр")
+            {
+                var result1 = rnd.Next(1, 31);
+                client.SendMessage(e.Command.ChatMessage.Channel,
+                    $"Результат: {result1} см  {e.Command.ChatMessage.Username}");
+            }
         }
 
         private void Client_OnJoinedChannel(object sender, OnJoinedChannelArgs e)

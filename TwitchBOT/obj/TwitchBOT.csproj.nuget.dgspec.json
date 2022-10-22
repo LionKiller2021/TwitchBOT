@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nikita\\RiderProjects\\TwitchBOT\\TwitchBOT\\TwitchBOT.csproj": {}
+    "C:\\Users\\yaros\\RiderProjects\\TwitchBOT2\\TwitchBOT\\TwitchBOT.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nikita\\RiderProjects\\TwitchBOT\\TwitchBOT\\TwitchBOT.csproj": {
+    "C:\\Users\\yaros\\RiderProjects\\TwitchBOT2\\TwitchBOT\\TwitchBOT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nikita\\RiderProjects\\TwitchBOT\\TwitchBOT\\TwitchBOT.csproj",
+        "projectUniqueName": "C:\\Users\\yaros\\RiderProjects\\TwitchBOT2\\TwitchBOT\\TwitchBOT.csproj",
         "projectName": "TwitchBOT",
-        "projectPath": "C:\\Users\\Nikita\\RiderProjects\\TwitchBOT\\TwitchBOT\\TwitchBOT.csproj",
-        "packagesPath": "C:\\Users\\Nikita\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nikita\\RiderProjects\\TwitchBOT\\TwitchBOT\\obj\\",
+        "projectPath": "C:\\Users\\yaros\\RiderProjects\\TwitchBOT2\\TwitchBOT\\TwitchBOT.csproj",
+        "packagesPath": "C:\\Users\\yaros\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\yaros\\RiderProjects\\TwitchBOT2\\TwitchBOT\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Nikita\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\yaros\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -49,7 +49,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -58,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
