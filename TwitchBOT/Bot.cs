@@ -11,7 +11,7 @@ namespace TwitchBOT
         TwitchClient client = new TwitchClient();
         ConnectionCredentials credentials = new ConnectionCredentials("botyarastreamer", "oauth:83aoeeykfnhvq0o1px7ay8a482kupi");
         private Random rnd = new Random();
-
+        string[] badWords = new string[] { "пидор" };
         public Bot()
         {
             client.Initialize(credentials, "Lion_Killer123");
@@ -28,9 +28,13 @@ namespace TwitchBOT
         {
             if (!e.ChatMessage.IsBroadcaster && !e.ChatMessage.IsModerator)
             {
-                if (e.ChatMessage.Message.ToLower().Contains("плохой человек"))
+                foreach (var badWord in badWords)
                 {
-                    client.TimeoutUser(e.ChatMessage.Channel, e.ChatMessage.Username, TimeSpan.FromSeconds(30), "Нет, ты плохой человек");
+                    if (e.ChatMessage.Message.ToLower().Contains(badWord.ToLower()))
+                    {
+                        client.TimeoutUser(e.ChatMessage.Channel, e.ChatMessage.Username, TimeSpan.FromSeconds(30),
+                            "Нет, ты плохой человек");
+                    }
                 }
             }
         }
