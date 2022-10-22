@@ -75,24 +75,17 @@ namespace TwitchBOT
                     break;
                 case "пидор":
 
-                    client.SendMessage(e.Command.ChatMessage.Channel, $"Результат: ОСУЖДАЮ БЫДЛО{e.Command.ChatMessage.Username}"); 
+                    client.SendMessage(e.Command.ChatMessage.Channel, $"Результат: ОСУЖДАЮ БЫДЛО {e.Command.ChatMessage.Username}"); 
                     
 
                     break;
                 case "бибаметр":
                     Random rnd1 = new Random(); // Инициализируем генератор случайных чисел
                     var result1 = rnd1.Next(1, 31 ); // Получаем случайное целое число в интервале [ 1; 7 )
-                    var sm = rnd1.Next(1,3 );
-                    if (e.Command.ChatMessage.Username=="nieloch" || e.Command.ChatMessage.Username=="nikodaddy_" || e.Command.ChatMessage.Username=="s1adkaya_bu1ochka" )
-                {
-                        client.SendMessage(e.Command.ChatMessage.Channel, $"Результат: 1 mm {e.Command.ChatMessage.Username} "); // Отправляем ответ
-                        break; 
-                    }
-                    if (sm==1 ) client.SendMessage(e.Command.ChatMessage.Channel, $"Результат: {result1}mm {e.Command.ChatMessage.Username} "); // Отправляем ответ
-                    if (sm==2 ) client.SendMessage(e.Command.ChatMessage.Channel, $"Результат: {result1}sm  {e.Command.ChatMessage.Username}"); // Отправляем ответ
-                    break;
-                    
-            }
+            
+            client.SendMessage(e.Command.ChatMessage.Channel, $"Результат: {result1} см  {e.Command.ChatMessage.Username}");
+            break;
+        }
         }
 
         private void Client_OnJoinedChannel(object sender, OnJoinedChannelArgs e)
