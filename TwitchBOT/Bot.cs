@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Channels;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Extensions;
@@ -8,10 +8,12 @@ namespace TwitchBOT
 {
     public class Bot
     {
-        TwitchClient client = new TwitchClient();
+        public TwitchClient client = new TwitchClient();
         ConnectionCredentials credentials = new ConnectionCredentials("botyarastreamer", "oauth:83aoeeykfnhvq0o1px7ay8a482kupi");
         private Random rnd = new Random();
         string[] badWords = new string[] { "пидор","негр","нига","пидарас","пидарасина","пидарила","негритоска","п.и.д.а.р","педик" };
+        private ulong sendedMessagesCount = 0; 
+        
         public Bot()
         {
             client.Initialize(credentials, "Lion_Killer123");
@@ -20,27 +22,49 @@ namespace TwitchBOT
             client.OnJoinedChannel += Client_OnJoinedChannel;
             client.OnChatCommandReceived += Client_OnChatCommandReceived;
             client.OnMessageReceived += Client_OnMessageReceived;
-
+            // client.OnNewSubscriber += Client_OnNewSubscriber;
+            
             client.Connect();
         }
 
+        // private void Client_OnNewSubscriber(object sender, OnMessageReceivedArgs e)
+        // {
+        //     
+        // }
+
         private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
+            
             if (e.ChatMessage.Message.ToLower().Contains("привет"))
             {
-                client.SendMessage(e.ChatMessage.Channel,"Добро пожаловать, не забудь подписатся");
+                SendMessage(e.ChatMessage,"Добро пожаловать, не забудь подписатся");
             }
-            if (!e.ChatMessage.IsBroadcaster && !e.ChatMessage.IsModerator)
+            if (!e.ChatMessage.IsBroadcaster) // && !e.ChatMessage.IsModerator
             {
                 foreach (var badWord in badWords)
                 {
                     if (e.ChatMessage.Message.ToLower().Contains(badWord.ToLower()))
                     {
-                        client.TimeoutUser(e.ChatMessage.Channel, e.ChatMessage.Username, TimeSpan.FromSeconds(30),
-                            "Осуждаю не одабряю быдло!!!");
+                        if (e.ChatMessage.IsSubscriber)
+                        {
+                            client.TimeoutUser(e.ChatMessage.Channel, e.ChatMessage.Username, TimeSpan.FromSeconds(30),
+                                "Осуждаю не одабряю быдло!!!");
+                        }
+                        else
+                        {
+                            client.TimeoutUser(e.ChatMessage.Channel, e.ChatMessage.Username, TimeSpan.FromSeconds(30),
+                                "Осуждаю не одабряю быдло!!!");
+                        }
                     }
                 }
             }
+
+            if (sendedMessagesCount >= 50)
+            {
+                SendMessage(e.ChatMessage, "/announce ПРив подписку за долар");
+                sendedMessagesCount = 0;
+            }
+            sendedMessagesCount++;
         }
 
         private void Client_OnChatCommandReceived(object sender, OnChatCommandReceivedArgs e)
@@ -51,26 +75,27 @@ namespace TwitchBOT
             if (command == "размергруди")
             {
                 var result1 = rnd.Next(0, 6);
-                client.SendMessage(e.Command.ChatMessage.Channel,
+                SendMessage(e.Command.ChatMessage,
                     $"Дойки: {result1}-го  {e.Command.ChatMessage.Username}");
             }
             else if (command == "др")
             {
                 var dr = new DateTime(now.Year+1, 10, 18);
                 var subtraction = dr.Subtract(now);
-                client.SendMessage(e.Command.ChatMessage.Channel, $"Мой др через: {subtraction.Days} дней");
+                SendMessage(e.Command.ChatMessage, $"Мой др через: {subtraction.Days} дней");
             }
             else if (command == "бибаметр")
             {
                 var result1 = rnd.Next(0, 32);
-                client.SendMessage(e.Command.ChatMessage.Channel,
+                SendMessage(e.Command.ChatMessage,
                     $"Результат: {result1} см  {e.Command.ChatMessage.Username}");
             }
             else if (command == "help")
             {
-                client.SendMessage(e.Command.ChatMessage.Channel, "!бибаметр" +
-                                                                  "\n !размергруди" +
-                                                                  "\n !др");
+                SendMessage(e.Command.ChatMessage, 
+                "!бибаметр" +
+                "\n !размергруди" +
+                "\n !др");
             }
         }
             
@@ -83,5 +108,10 @@ namespace TwitchBOT
         {
             Console.WriteLine(e.Data);
         }
+
+        private void SendMessage(ChatMessage chatMessage, string message)
+        {
+            client.SendMessage(chatMessage.Channel, message);
+        } 
     }
 }
