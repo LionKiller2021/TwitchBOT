@@ -26,6 +26,10 @@ namespace TwitchBOT
 
         private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
+            if (e.ChatMessage.Message.ToLower().Contains("привет"))
+            {
+                client.SendMessage(e.ChatMessage.Channel,"Добро пожаловать, не забудь подписатся");
+            }
             if (!e.ChatMessage.IsBroadcaster && !e.ChatMessage.IsModerator)
             {
                 foreach (var badWord in badWords)
@@ -62,8 +66,14 @@ namespace TwitchBOT
                 client.SendMessage(e.Command.ChatMessage.Channel,
                     $"Результат: {result1} см  {e.Command.ChatMessage.Username}");
             }
+            else if (command == "help")
+            {
+                client.SendMessage(e.Command.ChatMessage.Channel, "!бибаметр" +
+                                                                  "\n !размергруди" +
+                                                                  "\n !др");
+            }
         }
-
+            
         private void Client_OnJoinedChannel(object sender, OnJoinedChannelArgs e)
         {
             client.SendMessage(e.Channel, "Привет! Бот успешно подключен к каналу.");
