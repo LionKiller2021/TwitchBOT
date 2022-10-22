@@ -40,20 +40,21 @@ namespace TwitchBOT
             var command = e.Command.CommandText.ToLower();
             var now = DateTime.Now;
 
-            if (command == "кубик")
+            if (command == "размергруди")
             {
-                var result = rnd.Next(1, 7);
-                client.SendMessage(e.Command.ChatMessage.Channel, $"Результат: {result}");
+                var result1 = rnd.Next(0, 6);
+                client.SendMessage(e.Command.ChatMessage.Channel,
+                    $"Дойки: {result1}-го  {e.Command.ChatMessage.Username}");
             }
             else if (command == "др")
             {
-                var dr = new DateTime(2001, 10, 18);
-                var subtraction = now.Subtract(dr);
-                client.SendMessage(e.Command.ChatMessage.Channel, $"Мой др через: {subtraction.Days}");
+                var dr = new DateTime(now.Year+1, 10, 18);
+                var subtraction = dr.Subtract(now);
+                client.SendMessage(e.Command.ChatMessage.Channel, $"Мой др через: {subtraction.Days} дней");
             }
             else if (command == "бибаметр")
             {
-                var result1 = rnd.Next(1, 31);
+                var result1 = rnd.Next(0, 32);
                 client.SendMessage(e.Command.ChatMessage.Channel,
                     $"Результат: {result1} см  {e.Command.ChatMessage.Username}");
             }
