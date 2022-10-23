@@ -24,25 +24,15 @@ namespace TwitchBOT
             client.OnJoinedChannel += Client_OnJoinedChannel;
             client.OnChatCommandReceived += Client_OnChatCommandReceived;
             client.OnMessageReceived += Client_OnMessageReceived;
-            // client.OnNewSubscriber += Client_OnNewSubscriber;
-            client.OnDisconnected += Client_OnDisconnected;
-            client.OnHostingStarted += Client_OnHostingStarted;
+            client.OnNewSubscriber += Client_OnNewSubscriber;
             client.Connect();
         }
 
-        // private void Client_OnNewSubscriber(object sender, OnMessageReceivedArgs e)
-        // {
-        //     
-        // }
-        private void Client_OnHostingStarted(object? sender, OnHostingStartedArgs e)
+        private void Client_OnNewSubscriber(object? sender, OnNewSubscriberArgs e)
         {
-            client.Reconnect();
+            client.SendMessage(e.Channel,$"Чмок в пупок догорой {e.Subscriber.DisplayName}");
         }
 
-        private void Client_OnDisconnected(object? sender, OnDisconnectedEventArgs e)
-        {
-            client.Reconnect();
-        }
         private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
             
