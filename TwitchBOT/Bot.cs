@@ -10,7 +10,7 @@ namespace TwitchBOT
     public class Bot
     {
         public TwitchClient client = new TwitchClient();
-        ConnectionCredentials credentials = new ConnectionCredentials("botyarastreamer", "oauth:83aoeeykfnhvq0o1px7ay8a482kupi");
+        ConnectionCredentials credentials = new ConnectionCredentials("botyarastreamer", "oauth:pcpffxxh5ixz7yhu44ujqpxggdp3ou");
         private Random rnd = new Random();
         string[] badWords = new string[] { "пидор","негр","нига","пидарас","пидарасина","пидарила","негритоска","п.и.д.а.р","педик","пидр","нигер","пидар","пидараска","пидрила" };
         private ulong sendedMessagesCount = 0;
