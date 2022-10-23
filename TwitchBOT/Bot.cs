@@ -3,6 +3,7 @@ using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Extensions;
 using TwitchLib.Client.Models;
+using TwitchLib.Communication.Events;
 
 namespace TwitchBOT
 {
@@ -11,8 +12,9 @@ namespace TwitchBOT
         public TwitchClient client = new TwitchClient();
         ConnectionCredentials credentials = new ConnectionCredentials("botyarastreamer", "oauth:83aoeeykfnhvq0o1px7ay8a482kupi");
         private Random rnd = new Random();
-        string[] badWords = new string[] { "пидор","негр","нига","пидарас","пидарасина","пидарила","негритоска","п.и.д.а.р","педик" };
-        private ulong sendedMessagesCount = 0; 
+        string[] badWords = new string[] { "пидор","негр","нига","пидарас","пидарасина","пидарила","негритоска","п.и.д.а.р","педик","пидр","нигер","пидар","пидараска","пидрила" };
+        private ulong sendedMessagesCount = 0;
+
         
         public Bot()
         {
@@ -23,7 +25,8 @@ namespace TwitchBOT
             client.OnChatCommandReceived += Client_OnChatCommandReceived;
             client.OnMessageReceived += Client_OnMessageReceived;
             // client.OnNewSubscriber += Client_OnNewSubscriber;
-            
+            client.OnDisconnected += Client_OnDisconnected;
+            client.OnHostingStarted += Client_OnHostingStarted;
             client.Connect();
         }
 
@@ -31,7 +34,15 @@ namespace TwitchBOT
         // {
         //     
         // }
+        private void Client_OnHostingStarted(object? sender, OnHostingStartedArgs e)
+        {
+            client.Reconnect();
+        }
 
+        private void Client_OnDisconnected(object? sender, OnDisconnectedEventArgs e)
+        {
+            client.Reconnect();
+        }
         private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
             
@@ -48,12 +59,12 @@ namespace TwitchBOT
                         if (e.ChatMessage.IsSubscriber)
                         {
                             client.TimeoutUser(e.ChatMessage.Channel, e.ChatMessage.Username, TimeSpan.FromSeconds(30),
-                                "Осуждаю не одабряю быдло!!!");
+                                "Осуждаю не одабряю Оформи лучше подписку ещё на месяц 🏳‍🌈 !!!");
                         }
                         else
                         {
                             client.TimeoutUser(e.ChatMessage.Channel, e.ChatMessage.Username, TimeSpan.FromSeconds(30),
-                                "Осуждаю не одабряю быдло!!!");
+                                "Осуждаю не одабряю быдло 🏳‍🌈 !!!");
                         }
                     }
                 }
@@ -61,7 +72,7 @@ namespace TwitchBOT
 
             if (sendedMessagesCount >= 50)
             {
-                SendMessage(e.ChatMessage, "/announce ПРив подписку за долар");
+                SendMessage(e.ChatMessage, "/announce 🎆НЕЗАБУДЬ Зафоловится,а и по возможности подписатся🎇");
                 sendedMessagesCount = 0;
             }
             sendedMessagesCount++;
